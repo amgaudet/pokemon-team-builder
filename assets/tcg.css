@@ -1,0 +1,26 @@
+ul{
+    float: right;
+}
+.pure-menu-list{
+    margin: 21px;
+}
+
+#cardCol{
+    overflow-x: scroll;
+    height: 500px; 
+    width: 550px;
+}
+
+header{
+    border: solid 4px black;
+}
+
+#leftCol{
+    overflow: scroll;
+    height: 100%;
+}
+
+img{
+    margin-left: 25%;
+    padding: 8px;
+}
