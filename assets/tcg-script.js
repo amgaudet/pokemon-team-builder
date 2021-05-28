@@ -6,6 +6,7 @@ var pokeName = document.querySelector('.name');
 var image = document.querySelector('img');
 var galleryCol = document.querySelector('#cardCol');
 var profPicEl = document.querySelector('#profPic');
+var titleEl = document.querySelector('.name');
 
 var apiSearch = function(pokemon){
     requestUrl = 'https://api.pokemontcg.io/v2/cards?q=name:' + pokemon;
@@ -31,6 +32,9 @@ var renderProfPic = function(card){
         divEl.setAttribute('class', 'pure-u-2-5');
         galleryCol.appendChild(divEl);
         divEl.appendChild(imgEl);
+        console.log(input.value);
+        titleEl.textContent = input.value;
+        //add color to the title
     i += 4;
     }
 }
@@ -46,7 +50,6 @@ galleryCol.addEventListener('click', function(event){
     event.preventDefault();
     var element = event.target;
     if(element.matches('img')){
-        console.log(element.src);
         profPicEl.setAttribute('src', element.src);
         profPicEl.setAttribute('width', '300');
         profPicEl.setAttribute('height', '400');
