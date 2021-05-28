@@ -24,3 +24,8 @@ img{
     margin-left: 25%;
     padding: 8px;
 }
+
+#profPic{
+    float: left;
+    margin: 0;
+}
