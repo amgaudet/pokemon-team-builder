@@ -11,6 +11,11 @@ ul{
     width: 550px;
 }
 
+#cardCol a{
+    display: inline-block;
+    margin-left: 25%;
+}
+
 header{
     border: solid 4px black;
 }
@@ -21,7 +26,6 @@ header{
 }
 
 img{
-    margin-left: 25%;
     padding: 8px;
 }
 
