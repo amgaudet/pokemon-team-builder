@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/pure-min.css"
         integrity="sha384-Uu6IeWbM+gzNVXJcM9XV3SohHtmWE+3VGi496jvgX1jyvDTXfdK+rfZc8C1Aehk5" crossorigin="anonymous">
-    <link rel="stylesheet" href="./assets/tcg.css">
+    <link rel="stylesheet" href="./assets/tcg.css"/>
     <title>PokeTeam TCG</title>
 </head>
 
@@ -38,49 +38,28 @@
         </div>
         <!-- row with search bar -->
         <div class="pure-g" id="row">
-            <form class="pure-form">
-                <input type="text" class="pure-input-rounded" />
-                <button type="submit" class="pure-button">Search</button>
-            </form>
+                <form id="form">
+                    <input type="textarea" id="searchBar"/>
+                    <button>Search</button>
+                </form>
         </div>
     </header>
     <!-- this row has the cols for searching -->
-    <div class="pure-g-scrollable" id="row">
+    <div class="pure-g">
+        <div class="pure-u-1"><h2 class="name">Pokemon</h2></div>
+    </div>
+    <div class="pure-g-scrollable" id="galRow">
         <div class="pure-u-2-5" id="cardCol">
-            <div class="pure-u-2-5">
+            <!-- <div class="pure-u-2-5">
                 <img src="https://via.placeholder.com/200x275" alt="">
-            </div>
-            <div class="pure-u-2-5">
-                <img src="https://via.placeholder.com/200x275" alt="">
-            </div>
-            <div class="pure-u-2-5">
-                <img src="https://via.placeholder.com/200x275" alt="">
-            </div>
-            <div class="pure-u-2-5">
-                <img src="https://via.placeholder.com/200x275" alt="">
-            </div>
-            <div class="pure-u-2-5">
-                <img src="https://via.placeholder.com/200x275" alt="">
-            </div>
-            <div class="pure-u-2-5">
-                <img src="https://via.placeholder.com/200x275" alt="">
-            </div>
-            <div class="pure-u-2-5">
-                <img src="https://via.placeholder.com/200x275" alt="">
-            </div>
-            <div class="pure-u-2-5">
-                <img src="https://via.placeholder.com/200x275" alt="">
-            </div>
-
-
-
+            </div> -->
         </div>
 
         <div class="pure-u-2-5">
 
             <div class="pure-g">
 
-                <div class="pure-u-3-5">
+                <div class="pure-u-3-5" id="gallery">
                     <img src="https://via.placeholder.com/300x375" id="profPic">
                 </div>
 
@@ -115,5 +94,5 @@
         my team
     </div>
 </body>
-
+<script src="./assets/tcg-script.js"></script>
 </html>
