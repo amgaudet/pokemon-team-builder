@@ -8,6 +8,7 @@ var galleryCol = document.querySelector('#cardCol');
 var profPicEl = document.querySelector('#profPic');
 var titleEl = document.querySelector('.name');
 var infoColEl = document.querySelector('#infoCol');
+var addTeamEl = document.querySelector('.addTeam');
 
 var apiSearch = function (pokemon) {
     requestUrl = 'https://api.pokemontcg.io/v2/cards?q=name:' + pokemon;
@@ -39,8 +40,9 @@ var renderProfPic = function (card) {
     }
 }
 
-var renderInfo = function (card) {
+var renderHolo = function (card) {
     infoColEl.innerHTML = " ";
+    addTeamEl.setAttribute('style', 'visibility:visible;');
     var holofoil = card.data[20].tcgplayer.prices.holofoil;
     var arrPrices = [
         'Low: $' + holofoil.low, 'Mid: $' + holofoil.mid, 
@@ -48,15 +50,43 @@ var renderInfo = function (card) {
     ];
     var rowEl = document.createElement('div');
     var colEl = document.createElement('div');
-    var holoEl = document.createElement('h3');
+    var firstEdEl = document.createElement('h3');
     var hrEl = document.createElement('hr');
-    holoEl.textContent = 'Holofoil';
+    firstEdEl.textContent = 'Holofoil';
     rowEl.setAttribute('class', 'pure-g');
     colEl.setAttribute('class', 'pure-u');
     infoColEl.appendChild(rowEl);
     rowEl.appendChild(colEl);
-    colEl.appendChild(holoEl);
-    holoEl.appendChild(hrEl);
+    colEl.appendChild(firstEdEl);
+    firstEdEl.appendChild(hrEl);
+    var ulEl = document.createElement('ul');
+    hrEl.appendChild(ulEl);
+    for(var i = 0; i < arrPrices.length; i++){
+        var liEl = document.createElement('li');
+        liEl.textContent = arrPrices[i];
+        ulEl.appendChild(liEl);
+    }
+}
+
+var renderFirstEd = function (card) {
+    var str = "1stEditionHolofoil";
+    var firstEdPrices = "card.data[20].prices.tcgplayer." + str;
+    console.log(firstEdPrices);
+    var arrPrices = [
+        'Low: $' + firstEdPrices.low, 'Mid: $' + firstEdPrices.mid, 
+        'High: $' + firstEdPrices.high, 'Market: $' + firstEdPrices.market
+    ];
+    var rowEl = document.createElement('div');
+    var colEl = document.createElement('div');
+    var firstEdEl = document.createElement('h3');
+    var hrEl = document.createElement('hr');
+    firstEdEl.textContent = 'Holofoil';
+    rowEl.setAttribute('class', 'pure-g');
+    colEl.setAttribute('class', 'pure-u');
+    infoColEl.appendChild(rowEl);
+    rowEl.appendChild(colEl);
+    colEl.appendChild(firstEdEl);
+    firstEdEl.appendChild(hrEl);
     var ulEl = document.createElement('ul');
     hrEl.appendChild(ulEl);
     for(var i = 0; i < arrPrices.length; i++){
@@ -87,7 +117,8 @@ galleryCol.addEventListener('click', function (event) {
                 return response.json();
             })
             .then(function (data) {
-                renderInfo(data);
+                renderHolo(data);
+                renderFirstEd(data);
             })
     }
 })
