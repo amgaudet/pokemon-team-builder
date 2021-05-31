@@ -126,7 +126,7 @@ searchResultsEl.addEventListener("click", function (event) {
 
 //removes warning message after designated time in call
 var fade = function() {
-    $('#error-message').fadeOut().empty();
+    $('#error-message').fadeOut();
 }
 
 searchEl.addEventListener("click", function (event) {
