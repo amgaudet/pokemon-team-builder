@@ -13,36 +13,36 @@ var addTmEl = document.querySelector('.addTeam');
 var memListEl = document.querySelector('.mem');
 var pokemonName;
 var pictureIndex;
+var arrObj;
 
-var cardMem = JSON.parse(localStorage.getItem('cardStorage')) || [];
+var cardMem = JSON.parse(localStorage.getItem('cardMem')) || [];
 
-var apiSearch = function (pokemon) {
+
+function apiSearch(pokemon) {
     pokemonName = pokemon;
     requestUrl = 'https://api.pokemontcg.io/v2/cards?q=name:' + pokemon;
     fetch(requestUrl)
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (data) {
-            renderProfPic(data);
-        })
+    .then(function (response) {
+        return response.json();
+    })
+    .then(function (data) {
+        renderProfPic(data);
+    })
 }
 
-var renderMemBtns = function () {
-    //var memCol = document.createElement('pure-u-2-5'); 
-
-    for (var card of cardMem) {
-        var button = document.createElement('button');
-        button.textContent = card;
-        memListEl.appendChild(button);
-    }
+function renderMemBtns() {
+    var liEl = document.createElement('li');
+    var button = document.createElement('button');
+    button.textContent = pokemonName;
+    memListEl.appendChild(liEl);
+    liEl.appendChild(button);
 }
 
 var renderProfPic = function (card) {
-    var i = 4;
+    var i = 0;
     var ind = 0;
     galleryCol.innerHTML = " ";
-    while (i < card.data.length) {
+    while (i < 2) {
         var divEl = document.createElement('div');
         var imgEl = document.createElement('img');
         imgEl.setAttribute('src', card.data[i].images.small);
@@ -52,17 +52,17 @@ var renderProfPic = function (card) {
         divEl.appendChild(imgEl);
         titleEl.textContent = input.value;
         //add color to the title
-        i += 4;
+        i++;
         ind++;
     }
 }
 
-var renderHolo = function (card) {
+function renderHolo(card) {
     addTeamEl.setAttribute('style', 'visibility:visible;');
     //console.log(card.data.findIndex('tcgplayer'));
     var holofoil = card.data[pictureIndex].tcgplayer.prices.holofoil;
     var arrPrices = [
-        'Low: $' + holofoil.low, 'Mid: $' + holofoil.mid, 
+        'Low: $' + holofoil.low, 'Mid: $' + holofoil.mid,
         'High: $' + holofoil.high, 'Market: $' + holofoil.market
     ];
     var rowEl = document.createElement('div');
@@ -78,14 +78,14 @@ var renderHolo = function (card) {
     firstEdEl.appendChild(hrEl);
     var ulEl = document.createElement('ul');
     hrEl.appendChild(ulEl);
-    for(var i = 0; i < arrPrices.length; i++){
+    for (var i = 0; i < arrPrices.length; i++) {
         var liEl = document.createElement('li');
         liEl.textContent = arrPrices[i];
         ulEl.appendChild(liEl);
     }
 }
 
-var renderNormalCard = function (card) {
+function renderNormalCard(card) {
     addTeamEl.setAttribute('style', 'visibility:visible;');
     var normal = card.data[pictureIndex].tcgplayer.prices.normal;
     var arrPrices = [
@@ -105,14 +105,14 @@ var renderNormalCard = function (card) {
     firstEdEl.appendChild(hrEl);
     var ulEl = document.createElement('ul');
     hrEl.appendChild(ulEl);
-    for(var i = 0; i < arrPrices.length; i++){
+    for (var i = 0; i < arrPrices.length; i++) {
         var liEl = document.createElement('li');
         liEl.textContent = arrPrices[i];
         ulEl.appendChild(liEl);
     }
 }
 
-var renderRevHolofoil = function (card) {
+function renderRevHolofoil(card) {
     addTeamEl.setAttribute('style', 'visibility:visible;');
     var revHolo = card.data[pictureIndex].tcgplayer.prices.reverseHolofoil;
     var arrPrices = [
@@ -132,38 +132,52 @@ var renderRevHolofoil = function (card) {
     firstEdEl.appendChild(hrEl);
     var ulEl = document.createElement('ul');
     hrEl.appendChild(ulEl);
-    for(var i = 0; i < arrPrices.length; i++){
+    for (var i = 0; i < arrPrices.length; i++) {
         var liEl = document.createElement('li');
         liEl.textContent = arrPrices[i];
         ulEl.appendChild(liEl);
     }
 }
 
-var renderFirstEd = function (card) {
-    var firstEdPrices = card.data[pictureIndex].prices.tcgplayer['1stEditionHolofoil'];
-    var arrPrices = [
-        'Low: $' + firstEdPrices.low, 'Mid: $' + firstEdPrices.mid, 
-        'High: $' + firstEdPrices.high, 'Market: $' + firstEdPrices.market
-    ];
-    var rowEl = document.createElement('div');
-    var colEl = document.createElement('div');
-    var firstEdEl = document.createElement('h3');
-    var hrEl = document.createElement('hr');
-    firstEdEl.textContent = '1st Edition Holofoil';
-    rowEl.setAttribute('class', 'pure-g');
-    colEl.setAttribute('class', 'pure-u');
-    infoColEl.appendChild(rowEl);
-    rowEl.appendChild(colEl);
-    colEl.appendChild(firstEdEl);
-    firstEdEl.appendChild(hrEl);
-    var ulEl = document.createElement('ul');
-    hrEl.appendChild(ulEl);
-    for(var i = 0; i < arrPrices.length; i++){
-        var liEl = document.createElement('li');
-        liEl.textContent = arrPrices[i];
-        ulEl.appendChild(liEl);
+function renderHistory() {
+    var btnListEl = document.querySelector('.mem');
+    for (card of cardMem) {
+        var butt = document.createElement('button');
+        butt.textContent = card.Name;
+        console.log(card.Name);
+        btnListEl.appendChild(butt);
     }
 }
+
+// var renderFirstEd = function (card) {
+//     var firstEdPrices = card.data[pictureIndex].prices.tcgplayer[1stEditionholofoil];
+//     var arrPrices = [
+//         'Low: $' + firstEdPrices.low, 'Mid: $' + firstEdPrices.mid, 
+//         'High: $' + firstEdPrices.high, 'Market: $' + firstEdPrices.market
+//     ];
+//     var rowEl = document.createElement('div');
+//     var colEl = document.createElement('div');
+//     var firstEdEl = document.createElement('h3');
+//     var hrEl = document.createElement('hr');
+//     firstEdEl.textContent = '1st Edition Holofoil';
+//     rowEl.setAttribute('class', 'pure-g');
+//     colEl.setAttribute('class', 'pure-u');
+//     infoColEl.appendChild(rowEl);
+//     rowEl.appendChild(colEl);
+//     colEl.appendChild(firstEdEl);
+//     firstEdEl.appendChild(hrEl);
+//     var ulEl = document.createElement('ul');
+//     hrEl.appendChild(ulEl);
+//     for(var i = 0; i < arrPrices.length; i++){
+//         var liEl = document.createElement('li');
+//         liEl.textContent = arrPrices[i];
+//         ulEl.appendChild(liEl);
+//     }
+// }
+//renderHistory();
+
+renderHistory();
+
 
 formEl.addEventListener('submit', function (event) {
     event.preventDefault();
@@ -173,8 +187,8 @@ formEl.addEventListener('submit', function (event) {
 });
 
 galleryCol.addEventListener('click', function (event) {
-    infoColEl.innerHTML = " ";
     event.preventDefault();
+    infoColEl.innerHTML = " ";
     var element = event.target;
     if (element.matches('img')) {
         profPicEl.setAttribute('src', element.src);
@@ -187,27 +201,28 @@ galleryCol.addEventListener('click', function (event) {
             })
             .then(function (card) {
                 console.log(card.data.indexOf(pokemonName));
-                if(card.data[pictureIndex].tcgplayer.prices.hasOwnProperty('holofoil')){
+                if (card.data[pictureIndex].tcgplayer.prices.hasOwnProperty('holofoil')) {
                     renderHolo(card);
                 }
-                
-                if(card.data[pictureIndex].tcgplayer.prices.hasOwnProperty('1stEditionHolofoil')){
-                    renderFirstEd(card);
-                } 
 
-                if(card.data[pictureIndex].tcgplayer.prices.hasOwnProperty('reverseHolofoil')){
+                // if(card.data[pictureIndex].tcgplayer.prices.hasOwnProperty('1stEditionHolofoil')){
+                //     renderFirstEd(card);
+                // } 
+
+                if (card.data[pictureIndex].tcgplayer.prices.hasOwnProperty('reverseHolofoil')) {
                     renderRevHolofoil(card);
                 }
 
-                if(card.data[pictureIndex].tcgplayer.prices.hasOwnProperty('normal')){
+                if (card.data[pictureIndex].tcgplayer.prices.hasOwnProperty('normal')) {
                     renderNormalCard(card);
                 }
             })
     }
 })
 
-addTmEl.addEventListener('click', function(){
-    cardMem.push(pokemonName);
+addTmEl.addEventListener('click', function (event) {
+    event.preventDefault();
+    cardMem = cardMem.concat({ Name: pokemonName, URL: requestUrl });
     localStorage.setItem('cardMem', JSON.stringify(cardMem));
     renderMemBtns();
 });
