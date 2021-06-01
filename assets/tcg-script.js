@@ -141,7 +141,6 @@ function renderHistory() {
         butt.setAttribute('class', 'memButton');
         butt.setAttribute('index', btnInd);
         butt.textContent = card.Name;
-        console.log(card.Name);
         btnListEl.appendChild(butt);
         btnInd++;
     }
@@ -194,7 +193,6 @@ formEl.addEventListener('submit', function (event) {
 
 document.querySelector('.mem').addEventListener('click', function(event){
     event.preventDefault();
-    console.log(event.target.innerHTML);
     var targetName = event.target.innerHTML;
     apiSearch(targetName);
 })
@@ -213,7 +211,6 @@ galleryCol.addEventListener('click', function (event) {
                 return response.json();
             })
             .then(function (card) {
-                console.log(card.data.indexOf(pokemonName));
                 if (card.data[pictureIndex].tcgplayer.prices.hasOwnProperty('holofoil')) {
                     renderHolo(card);
                 }
@@ -242,11 +239,15 @@ addTmEl.addEventListener('click', function (event) {
 
 remTmEl.addEventListener('click', function (event) {
     event.preventDefault();
-    console.log(document.querySelector('.memButton', ''););
-    // for(var i = 0; i < btnInd + 1; i++){
-    //     if(memBtnEl.indexOf(i).textContent === pokemonName){
-    //         memBtnEl.indexOf(i).setAttribute('style', 'display:none;');
-    //     }
-    // }
+    var buttons = document.getElementsByClassName('memButton');
+    console.log(cardMem[0].Name)
+    for(var i = 0; i < btnInd + 1; i++){
+        if(buttons[i].innerHTML === pokemonName){
+            buttons[i].setAttribute('style', 'display:none;');
+            cardMem.splice(i, 1);
+            localStorage.setItem('cardMem', JSON.stringify(cardMem));
+        }
+    }
+    
     renderMemBtns();
 })
