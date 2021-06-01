@@ -2,29 +2,83 @@
     box-sizing: border-box;
 }
 
-header {
+:root{
+    --background-color: #282828;
+    --text-color: white;
+    --btn-color: #3500D3;
+    --header-color: #190061;
+    --cardGal-color: #0C0032;
+}
+
+input{
+    margin-left: 16px;
+}
+
+body{
+    background-color: var(--background-color);
+}
+
+li{
+    list-style-type: none;
+}
+
+.pure-g{
+    border: solid 2px var(--text-color);
+    color: var(--text-color);
+}
+
+.pure-menu-list{
+    margin: 21px;
+    float: right;
+}
+
+h1,h2,h3{
+    margin-left: 16px;
+}
+
+.search-results{
     display: flex;
+    flex-direction: column;
     justify-content: center;
 }
 
-main {
-    display:flex;
-    flex-direction: row;
-}
-
-section { 
+#myTeamRow{
     display: flex;
     flex-direction: column;
-    align-items: center;
-    margin: 60px;
+    background-color: var(--header-color);
 }
 
-.team-spot{
-    display:flex;
-    flex-direction: column;
-    align-items: center;
+.rmvBtn{
+    transform: translateY(-40px);
 }
 
-.save-btn {
-    display: none;
+.main-img{
+    margin: auto;
+}
+
+.save-btn{
+    margin-top: 10%;
+    width: 25%;
+    transform: translateX(150%);
+}
+
+#picCol{
+    background-color: var(--cardGal-color);
+}
+
+header{
+    background-color: var(--header-color);
+}
+button{
+    background-color: var(--btn-color);
+    color: var(--text-color);
+}
+
+button:hover{
+    size: 10px;
+    transition: all 0.3s ease-in-out;
+}
+
+button:active{
+    background-color: #3500d321;
 }

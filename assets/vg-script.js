@@ -8,7 +8,7 @@ var savedLibrary = document.querySelector('.saved-team');
 var imageEl = document.querySelector('.main-img');
 var imageUrl = "";
 var myTeam = JSON.parse(localStorage.getItem("savedTeam")) || [];
-// var duplicate = false;
+var duplicate = false;
 var removeEl = document.querySelector('.remove');
 
 var searchAPI = function (pokemon) {
@@ -37,6 +37,8 @@ var renderStats = function (pokemon, details) {
     //creates image
     imageUrl = pokemon.sprites.front_default
     imageEl.setAttribute("src", imageUrl);
+    imageEl.setAttribute('width', '200');
+    imageEl.setAttribute('height', '200');
     searchResultsEl.prepend(imageEl);
 
     //check if pokemon is already in my Team, if true, dont show btn
@@ -61,6 +63,11 @@ var renderStats = function (pokemon, details) {
     }
 
     //populates stats to page
+     var bioSubHead = document.createElement('h3');
+     var physSubHead = document.createElement('h3');
+     var hrEl = document.createElement('hr');
+     bioSubHead.textContent = 'Bio';
+     physSubHead.textContent = 'Physical Features';
     var dexEntryEl = document.createElement('li');
     dexEntryEl.textContent = dexEntry;
     var heightM = (pokemon.height / 10);
@@ -69,7 +76,10 @@ var renderStats = function (pokemon, details) {
     var weightKg = (pokemon.weight / 10);
     var weightEl = document.createElement('li');
     weightEl.textContent = "Weight: " + weightKg + "kg";
+    statsEl.append(bioSubHead);
     statsEl.append(dexEntryEl);
+    statsEl.append(hrEl);
+    statsEl.append(physSubHead);
     statsEl.append(heightEl);
     statsEl.append(weightEl);
 
@@ -99,6 +109,7 @@ var renderMyTeam = function () {
         var savedPokemonEl = document.createElement('h3');
         savedPokemonEl.textContent = savedPokemon;
         var removeBtnEl = document.createElement('button');
+        removeBtnEl.setAttribute('class', 'rmvBtn');
         removeBtnEl.setAttribute("data-index", i);
         removeBtnEl.textContent = "Remove From Team";
         var savedAvatarEl = document.createElement('img');
@@ -150,6 +161,7 @@ var fade = function () {
 searchEl.addEventListener("click", function (event) {
     event.preventDefault();
     var element = event.target;
+    console.log(element);
     var searchQuery = "";
     if (element.matches('button')) {
         searchQuery = searchValueEl.value.toLowerCase();
@@ -162,6 +174,7 @@ searchEl.addEventListener("click", function (event) {
 savedLibrary.addEventListener("click", function (event) {
     event.preventDefault();
     var element = event.target;
+    console.log(element);
     if (element.matches('img')) {
         var pokemon = element.getAttribute('class');
         searchAPI(pokemon);
