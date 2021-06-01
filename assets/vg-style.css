@@ -7,6 +7,11 @@ header {
     justify-content: center;
 }
 
+.search {
+    display: flex;
+    
+}
+
 main {
     display:flex;
     flex-direction: row;

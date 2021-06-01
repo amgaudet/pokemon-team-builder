@@ -8,7 +8,7 @@ var savedLibrary = document.querySelector('.saved-team');
 var imageEl = document.querySelector('.main-img');
 var imageUrl = "";
 var myTeam = JSON.parse(localStorage.getItem("savedTeam")) || [];
-// var duplicate = false;
+var duplicate = false;
 var removeEl = document.querySelector('.remove');
 
 var searchAPI = function (pokemon) {
@@ -45,7 +45,7 @@ var renderStats = function (pokemon, details) {
             included = true;
         }
     }
-    
+
     //displays save button and sets dataset for pokemon name if not on myTeam
     if (!included) {
         saveBtn.style.display = "inline";
@@ -132,7 +132,7 @@ searchResultsEl.addEventListener("click", function (event) {
             $('#error-message').text("That Pokemon is already on your team");
             duplicate = false;
             setTimeout(fade, 3000);
-        } 
+        }
         else {
             var savedEntry = { name: savedMon, url: imageUrl };
             myTeam = myTeam.concat(savedEntry);

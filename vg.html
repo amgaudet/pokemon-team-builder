@@ -1,45 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    
-    <link rel="stylesheet" href="./assets/vg-style.css" />
-    <title>Pokemon Team Builder</title>
-  </head>
 
-  <body>
-        <header>
-          <span class="search">
-            <form>
-              <input type="textarea" value="">
-              <button>Search</button>
-            </form>
-          </span>
-          <h1>Pokemon Team Builder<img src="https://static.wikia.nocookie.net/pokemon-fano/images/6/6f/Poke_Ball.png/revision/latest/scale-to-width-down/767?cb=20140520015336" alt="pokeball" height="40px" width=auto/></h1>
-        </header>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-        <main>
-            <section class="saved-team">
-                <h2>My Team</h2>
-                <span class="container">
+  <!-- Pure CSS stylesheet -->
+  <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/base-min.css">
+  <link rel="stylesheet" href="./assets/vg-style.css" />
+  <title>Pokemon Team Builder</title>
+</head>
 
-                </span>
-            </section>
+<body>
+  <header>
+    <span class="search">
+      <form>
+        <input type="textarea" value="">
+        <button>Search</button>
+      </form>
+    </span>
+    <h1>Pokemon Team Builder<img
+        src="https://static.wikia.nocookie.net/pokemon-fano/images/6/6f/Poke_Ball.png/revision/latest/scale-to-width-down/767?cb=20140520015336"
+        alt="pokeball" height="40px" width=auto /></h1>
+  </header>
 
-            <section class="search-results">
-              <img class="main-img"/>
-              <span>
-                <h2 class="poke-name"></h2>
-                <ul class=stats></ul>
-              </span>
-              <button class="save-btn">Save to My Team</button>
-              <p id="error-message"></p>
-            </section>
-        </main>
-    
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>    
-    <script src="./assets/vg-script.js"></script>
-  </body>
+  <main>
+    <section class="saved-team">
+      <h2>My Team</h2>
+      <span class="container">
+
+      </span>
+    </section>
+
+    <section class="search-results">
+      <img class="main-img" />
+      <span>
+        <h2 class="poke-name"></h2>
+        <ul class=stats></ul>
+      </span>
+      <button class="save-btn">Save to My Team</button>
+      <p id="error-message"></p>
+    </section>
+  </main>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="./assets/vg-script.js"></script>
+</body>
+
 </html>
