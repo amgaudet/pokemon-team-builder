@@ -7,7 +7,7 @@ var init = function() {
         if (event.target.matches('button')) {
             var element = event.target;
             var newURL = element.getAttribute("class");
-            window.location = "file:///C:/Users/i/homework/pokemon-team-builder/" + newURL + ".html";
+            window.location = "./" + newURL + ".html";
         }
     })
 }
