@@ -11,10 +11,11 @@ var infoColEl = document.querySelector('#infoCol');
 var addTeamEl = document.querySelector('.addTeam');
 var addTmEl = document.querySelector('.addTeam');
 var memListEl = document.querySelector('.mem');
+var remTmEl = document.querySelector('.removeTeam');
 var pokemonName;
 var pictureIndex;
 var arrObj;
-
+var btnInd = 0;
 var cardMem = JSON.parse(localStorage.getItem('cardMem')) || [];
 
 
@@ -28,14 +29,6 @@ function apiSearch(pokemon) {
     .then(function (data) {
         renderProfPic(data);
     })
-}
-
-function renderMemBtns() {
-    var liEl = document.createElement('li');
-    var button = document.createElement('button');
-    button.textContent = pokemonName;
-    memListEl.appendChild(liEl);
-    liEl.appendChild(button);
 }
 
 var renderProfPic = function (card) {
@@ -59,7 +52,7 @@ var renderProfPic = function (card) {
 
 function renderHolo(card) {
     addTeamEl.setAttribute('style', 'visibility:visible;');
-    //console.log(card.data.findIndex('tcgplayer'));
+    remTmEl.setAttribute('style', 'visibility:visible;');
     var holofoil = card.data[pictureIndex].tcgplayer.prices.holofoil;
     var arrPrices = [
         'Low: $' + holofoil.low, 'Mid: $' + holofoil.mid,
@@ -87,6 +80,7 @@ function renderHolo(card) {
 
 function renderNormalCard(card) {
     addTeamEl.setAttribute('style', 'visibility:visible;');
+    remTmEl.setAttribute('style', 'visibility:visible;');
     var normal = card.data[pictureIndex].tcgplayer.prices.normal;
     var arrPrices = [
         'Low: $' + normal.low, 'Mid: $' + normal.mid,
@@ -114,6 +108,7 @@ function renderNormalCard(card) {
 
 function renderRevHolofoil(card) {
     addTeamEl.setAttribute('style', 'visibility:visible;');
+    remTmEl.setAttribute('style', 'visibility:visible;');
     var revHolo = card.data[pictureIndex].tcgplayer.prices.reverseHolofoil;
     var arrPrices = [
         'Low: $' + revHolo.low, 'Mid: $' + revHolo.mid,
@@ -143,14 +138,25 @@ function renderHistory() {
     var btnListEl = document.querySelector('.mem');
     for (card of cardMem) {
         var butt = document.createElement('button');
+        butt.setAttribute('class', 'memButton');
+        butt.setAttribute('index', btnInd);
         butt.textContent = card.Name;
         console.log(card.Name);
         btnListEl.appendChild(butt);
+        btnInd++;
     }
 }
 
+function renderMemBtns() {
+    var liEl = document.createElement('li');
+    var button = document.createElement('button');
+    button.textContent = pokemonName;
+    memListEl.appendChild(liEl);
+    liEl.appendChild(button);
+}
+
 // var renderFirstEd = function (card) {
-//     var firstEdPrices = card.data[pictureIndex].prices.tcgplayer[1stEditionholofoil];
+    //     var firstEdPrices = card.data[pictureIndex].prices.tcgplayer[1stEditionholofoil];
 //     var arrPrices = [
 //         'Low: $' + firstEdPrices.low, 'Mid: $' + firstEdPrices.mid, 
 //         'High: $' + firstEdPrices.high, 'Market: $' + firstEdPrices.market
@@ -185,6 +191,13 @@ formEl.addEventListener('submit', function (event) {
     searchQuery = input.value.toLowerCase();
     apiSearch(searchQuery);
 });
+
+document.querySelector('.mem').addEventListener('click', function(event){
+    event.preventDefault();
+    console.log(event.target.innerHTML);
+    var targetName = event.target.innerHTML;
+    apiSearch(targetName);
+})
 
 galleryCol.addEventListener('click', function (event) {
     event.preventDefault();
@@ -222,7 +235,18 @@ galleryCol.addEventListener('click', function (event) {
 
 addTmEl.addEventListener('click', function (event) {
     event.preventDefault();
-    cardMem = cardMem.concat({ Name: pokemonName, URL: requestUrl });
+    cardMem = cardMem.concat({ Name: pokemonName, URL: requestUrl});
     localStorage.setItem('cardMem', JSON.stringify(cardMem));
     renderMemBtns();
 });
+
+remTmEl.addEventListener('click', function (event) {
+    event.preventDefault();
+    console.log(document.querySelector('.memButton', ''););
+    // for(var i = 0; i < btnInd + 1; i++){
+    //     if(memBtnEl.indexOf(i).textContent === pokemonName){
+    //         memBtnEl.indexOf(i).setAttribute('style', 'display:none;');
+    //     }
+    // }
+    renderMemBtns();
+})
