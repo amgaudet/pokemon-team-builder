@@ -13,14 +13,16 @@ var memListEl = document.querySelector('.mem');
 var remTmEl = document.querySelector('.removeTeam');
 var pokemonName;
 var pictureIndex;
+var pictureUrl;
 var arrObj;
 var btnInd = 0;
 var cardMem = JSON.parse(localStorage.getItem('cardMem')) || [];
 
 
 function apiSearch(pokemon) {
+    // declaration not needed
     pokemonName = pokemon;
-    requestUrl = 'https://api.pokemontcg.io/v2/cards?q=name:' + pokemon;
+    requestUrl = 'https://api.pokemontcg.io/v2/cards?q=name:' + pokemon + '&pageSize=20';
     fetch(requestUrl)
         .then(function (response) {
             return response.json();
@@ -30,11 +32,11 @@ function apiSearch(pokemon) {
         })
 }
 
+
 var renderProfPic = function (card) {
-    var i = 0;
     var ind = 0;
     galleryCol.innerHTML = " ";
-    while (i < 40) {
+    for (var i = 0; i < 20; i++) {
         var divEl = document.createElement('div');
         var imgEl = document.createElement('img');
         imgEl.setAttribute('src', card.data[i].images.small);
@@ -44,7 +46,6 @@ var renderProfPic = function (card) {
         galleryCol.appendChild(divEl);
         divEl.appendChild(imgEl);
         titleEl.textContent = pokemonName;
-        console.log();
         i++;
         ind++;
     }
@@ -134,10 +135,14 @@ function renderRevHolofoil(card) {
     }
 }
 
+//renders team from memory
 function renderHistory() {
+    clearHistory(memListEl);
+
     var btnListEl = document.querySelector('.mem');
     for (card of cardMem) {
         var butt = document.createElement('button');
+        //var butt = document.createElement('img');
         butt.setAttribute('class', 'memButton');
         butt.setAttribute('index', btnInd);
         butt.textContent = card.Name;
@@ -146,6 +151,7 @@ function renderHistory() {
     }
 }
 
+
 function renderMemBtns() {
     var liEl = document.createElement('li');
     var button = document.createElement('button');
@@ -153,8 +159,6 @@ function renderMemBtns() {
     memListEl.appendChild(liEl);
     liEl.appendChild(button);
 }
-
-renderHistory();
 
 formEl.addEventListener('submit', function (event) {
     event.preventDefault();
@@ -165,6 +169,13 @@ formEl.addEventListener('submit', function (event) {
     }
     apiSearch(searchQuery);
 });
+
+
+var clearHistory = function (parent) {
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
+};
 
 document.querySelector('.mem').addEventListener('click', function (event) {
     event.preventDefault();
@@ -177,7 +188,8 @@ galleryCol.addEventListener('click', function (event) {
     infoColEl.innerHTML = " ";
     var element = event.target;
     if (element.matches('img')) {
-        profPicEl.setAttribute('src', element.src);
+        pictureUrl = element.src;
+        profPicEl.setAttribute('src', pictureUrl);
         profPicEl.setAttribute('width', '300');
         profPicEl.setAttribute('height', '400');
         pictureIndex = element.getAttribute('index');
@@ -201,9 +213,17 @@ galleryCol.addEventListener('click', function (event) {
 
 addTmEl.addEventListener('click', function (event) {
     event.preventDefault();
-    cardMem = cardMem.concat({ Name: pokemonName, URL: requestUrl });
-    localStorage.setItem('cardMem', JSON.stringify(cardMem));
-    renderMemBtns();
+    var duplicate = false;
+    //changed URL to picture index instead of full fetch URL
+    for (var i = 0; i < cardMem.length; i++) {
+        if (pokemonName === cardMem[i].Name)
+            duplicate = true;
+    }
+    if (!duplicate) {
+        cardMem = cardMem.concat({ Name: pokemonName, URL: pictureUrl });
+        localStorage.setItem('cardMem', JSON.stringify(cardMem));
+        renderHistory();
+    }
 });
 
 remTmEl.addEventListener('click', function (event) {
@@ -216,5 +236,7 @@ remTmEl.addEventListener('click', function (event) {
             localStorage.setItem('cardMem', JSON.stringify(cardMem));
         }
     }
-    renderMemBtns();
+    renderHistory();
 })
+
+renderHistory();
