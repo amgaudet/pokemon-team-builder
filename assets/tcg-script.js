@@ -141,12 +141,10 @@ function renderHistory() {
 
     var btnListEl = document.querySelector('.mem');
     for (card of cardMem) {
-        //var butt = document.createElement('button');
         var butt = document.createElement('img');
         butt.setAttribute('src', cardMem[btnInd].url)
         butt.setAttribute('class', 'memButton');
         butt.setAttribute('index', btnInd);
-        //butt.textContent = card.Name;
         butt.setAttribute('data-name', card.Name)
         btnListEl.appendChild(butt);
         btnInd++;
@@ -230,6 +228,7 @@ remTmEl.addEventListener('click', function (event) {
     for (var i = 0; i < cardMem.length; i++) {
         if (pokemonName === cardMem[i].Name) {
             cardMem.splice(i, 1);
+            localStorage.setItem("cardMem", JSON.stringify(cardMem));
         }
     }
     renderHistory();
