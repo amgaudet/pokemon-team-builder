@@ -8,7 +8,8 @@ var savedLibrary = document.querySelector('.saved-team');
 var imageEl = document.querySelector('.main-img');
 var imageUrl = "";
 var myTeam = JSON.parse(localStorage.getItem("savedTeam")) || [];
-var duplicate = false;
+// var duplicate = false;
+var removeEl = document.querySelector('.remove');
 
 var searchAPI = function (pokemon) {
     var requestUrl = 'https://pokeapi.co/api/v2/pokemon/' + pokemon;
@@ -31,15 +32,25 @@ var searchAPI = function (pokemon) {
 var renderStats = function (pokemon, details) {
     //clears old stats
     clearHistory(statsEl);
+    var included = false;
 
     //creates image
     imageUrl = pokemon.sprites.front_default
     imageEl.setAttribute("src", imageUrl);
     searchResultsEl.prepend(imageEl);
 
-    //creates save button and sets dataset for pokemon name
-    saveBtn.style.display = "inline";
-    saveBtn.setAttribute("data-name", pokemon.name);
+    //check if pokemon is already in my Team, if true, dont show btn
+    for (var a = 0; a < myTeam.length; a++) {
+        if (myTeam[a].name === pokemon.name) {
+            included = true;
+        }
+    }
+    
+    //displays save button and sets dataset for pokemon name if not on myTeam
+    if (!included) {
+        saveBtn.style.display = "inline";
+        saveBtn.setAttribute("data-name", pokemon.name);
+    }
 
     //finds english pokedex entry
     var dexEntry = "";
@@ -80,11 +91,16 @@ var renderMyTeam = function () {
     teamTitle.textContent = "My Team";
     savedLibrary.appendChild(teamTitle);
 
+    //populates saved team section
     for (var i = 0; i < myTeam.length; i++) {
         var teamSpot = document.createElement('span');
+        teamSpot.setAttribute("class", "team-spot");
         var savedPokemon = myTeam[i].name;
         var savedPokemonEl = document.createElement('h3');
         savedPokemonEl.textContent = savedPokemon;
+        var removeBtnEl = document.createElement('button');
+        removeBtnEl.setAttribute("data-index", i);
+        removeBtnEl.textContent = "Remove From Team";
         var savedAvatarEl = document.createElement('img');
         savedAvatarEl.setAttribute("src", myTeam[i].url);
         savedAvatarEl.setAttribute("class", savedPokemon);
@@ -92,6 +108,7 @@ var renderMyTeam = function () {
         savedLibrary.appendChild(teamSpot);
         teamSpot.appendChild(savedPokemonEl);
         teamSpot.appendChild(savedAvatarEl);
+        teamSpot.appendChild(removeBtnEl);
     }
 }
 
@@ -107,7 +124,7 @@ searchResultsEl.addEventListener("click", function (event) {
                 duplicate = true;
             }
         }
-        console.log(duplicate);
+        //Displays warning message for Team max size
         if (myTeam.length > 5) {
             $('#error-message').text("You may only have six pokemon on your team.");
             setTimeout(fade, 3000);
@@ -115,7 +132,8 @@ searchResultsEl.addEventListener("click", function (event) {
             $('#error-message').text("That Pokemon is already on your team");
             duplicate = false;
             setTimeout(fade, 3000);
-        } else {
+        } 
+        else {
             var savedEntry = { name: savedMon, url: imageUrl };
             myTeam = myTeam.concat(savedEntry);
             localStorage.setItem("savedTeam", JSON.stringify(myTeam));
@@ -125,7 +143,7 @@ searchResultsEl.addEventListener("click", function (event) {
 });
 
 //removes warning message after designated time in call
-var fade = function() {
+var fade = function () {
     $('#error-message').fadeOut();
 }
 
@@ -147,6 +165,11 @@ savedLibrary.addEventListener("click", function (event) {
     if (element.matches('img')) {
         var pokemon = element.getAttribute('class');
         searchAPI(pokemon);
+    }
+    if (element.matches('button')) {
+        myTeam.splice(element.dataset.index, 1);
+        localStorage.setItem("savedTeam", JSON.stringify(myTeam));
+        renderMyTeam();
     }
 });
 

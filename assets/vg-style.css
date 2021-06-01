@@ -19,6 +19,12 @@ section {
     margin: 60px;
 }
 
+.team-spot{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .save-btn {
     display: none;
 }
