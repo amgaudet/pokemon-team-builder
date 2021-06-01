@@ -8,7 +8,7 @@ var savedLibrary = document.querySelector('.saved-team');
 var imageEl = document.querySelector('.main-img');
 var imageUrl = "";
 var myTeam = JSON.parse(localStorage.getItem("savedTeam")) || [];
-// var duplicate = false;
+var duplicate = false;
 var removeEl = document.querySelector('.remove');
 
 var searchAPI = function (pokemon) {
