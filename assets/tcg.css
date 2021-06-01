@@ -1,6 +1,17 @@
 ul{
     float: right;
+    display:flex;
+    flex-direction: column;
 }
+
+li{
+    list-style-type: none;
+}
+
+hr{
+    width: 100%;
+}
+
 .pure-menu-list{
     margin: 21px;
 }
@@ -8,7 +19,12 @@ ul{
 #cardCol{
     overflow-x: scroll;
     height: 500px; 
-    width: 550px;
+    width: 700px;
+}
+
+#cardCol a{
+    display: inline-block;
+    margin-left: 25%;
 }
 
 header{
@@ -21,7 +37,6 @@ header{
 }
 
 img{
-    margin-left: 25%;
     padding: 8px;
 }
 
