@@ -2,7 +2,6 @@ var formEl = document.querySelector('#form');
 var input = document.querySelector('#searchBar');
 var searchEl = document.querySelector('#span');
 var picGallery = document.querySelector('#gallery');
-var pokeName = document.querySelector('.name');
 var image = document.querySelector('img');
 var galleryCol = document.querySelector('#cardCol');
 var profPicEl = document.querySelector('#profPic');
@@ -23,28 +22,29 @@ function apiSearch(pokemon) {
     pokemonName = pokemon;
     requestUrl = 'https://api.pokemontcg.io/v2/cards?q=name:' + pokemon;
     fetch(requestUrl)
-    .then(function (response) {
-        return response.json();
-    })
-    .then(function (data) {
-        renderProfPic(data);
-    })
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (data) {
+            renderProfPic(data);
+        })
 }
 
 var renderProfPic = function (card) {
     var i = 0;
     var ind = 0;
     galleryCol.innerHTML = " ";
-    while (i < 2) {
+    while (i < 40) {
         var divEl = document.createElement('div');
         var imgEl = document.createElement('img');
         imgEl.setAttribute('src', card.data[i].images.small);
         divEl.setAttribute('class', 'pure-u-2-5');
         imgEl.setAttribute('index', ind);
+        imgEl.setAttribute('id', 'card');
         galleryCol.appendChild(divEl);
         divEl.appendChild(imgEl);
-        titleEl.textContent = input.value;
-        //add color to the title
+        titleEl.textContent = pokemonName;
+        console.log();
         i++;
         ind++;
     }
@@ -154,44 +154,19 @@ function renderMemBtns() {
     liEl.appendChild(button);
 }
 
-// var renderFirstEd = function (card) {
-    //     var firstEdPrices = card.data[pictureIndex].prices.tcgplayer[1stEditionholofoil];
-//     var arrPrices = [
-//         'Low: $' + firstEdPrices.low, 'Mid: $' + firstEdPrices.mid, 
-//         'High: $' + firstEdPrices.high, 'Market: $' + firstEdPrices.market
-//     ];
-//     var rowEl = document.createElement('div');
-//     var colEl = document.createElement('div');
-//     var firstEdEl = document.createElement('h3');
-//     var hrEl = document.createElement('hr');
-//     firstEdEl.textContent = '1st Edition Holofoil';
-//     rowEl.setAttribute('class', 'pure-g');
-//     colEl.setAttribute('class', 'pure-u');
-//     infoColEl.appendChild(rowEl);
-//     rowEl.appendChild(colEl);
-//     colEl.appendChild(firstEdEl);
-//     firstEdEl.appendChild(hrEl);
-//     var ulEl = document.createElement('ul');
-//     hrEl.appendChild(ulEl);
-//     for(var i = 0; i < arrPrices.length; i++){
-//         var liEl = document.createElement('li');
-//         liEl.textContent = arrPrices[i];
-//         ulEl.appendChild(liEl);
-//     }
-// }
-//renderHistory();
-
 renderHistory();
-
 
 formEl.addEventListener('submit', function (event) {
     event.preventDefault();
     var searchQuery;
     searchQuery = input.value.toLowerCase();
+    if (searchQuery === "") {
+        alert('Please enter a valid pokemon name!');
+    }
     apiSearch(searchQuery);
 });
 
-document.querySelector('.mem').addEventListener('click', function(event){
+document.querySelector('.mem').addEventListener('click', function (event) {
     event.preventDefault();
     var targetName = event.target.innerHTML;
     apiSearch(targetName);
@@ -214,15 +189,9 @@ galleryCol.addEventListener('click', function (event) {
                 if (card.data[pictureIndex].tcgplayer.prices.hasOwnProperty('holofoil')) {
                     renderHolo(card);
                 }
-
-                // if(card.data[pictureIndex].tcgplayer.prices.hasOwnProperty('1stEditionHolofoil')){
-                //     renderFirstEd(card);
-                // } 
-
                 if (card.data[pictureIndex].tcgplayer.prices.hasOwnProperty('reverseHolofoil')) {
                     renderRevHolofoil(card);
                 }
-
                 if (card.data[pictureIndex].tcgplayer.prices.hasOwnProperty('normal')) {
                     renderNormalCard(card);
                 }
@@ -232,7 +201,7 @@ galleryCol.addEventListener('click', function (event) {
 
 addTmEl.addEventListener('click', function (event) {
     event.preventDefault();
-    cardMem = cardMem.concat({ Name: pokemonName, URL: requestUrl});
+    cardMem = cardMem.concat({ Name: pokemonName, URL: requestUrl });
     localStorage.setItem('cardMem', JSON.stringify(cardMem));
     renderMemBtns();
 });
@@ -240,14 +209,12 @@ addTmEl.addEventListener('click', function (event) {
 remTmEl.addEventListener('click', function (event) {
     event.preventDefault();
     var buttons = document.getElementsByClassName('memButton');
-    console.log(cardMem[0].Name)
-    for(var i = 0; i < btnInd + 1; i++){
-        if(buttons[i].innerHTML === pokemonName){
+    for (var i = 0; i < btnInd + 1; i++) {
+        if (buttons[i].innerHTML === pokemonName) {
             buttons[i].setAttribute('style', 'display:none;');
             cardMem.splice(i, 1);
             localStorage.setItem('cardMem', JSON.stringify(cardMem));
         }
     }
-    
     renderMemBtns();
 })

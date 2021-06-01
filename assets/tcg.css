@@ -1,18 +1,34 @@
+:root{
+    --background-color: #282828;
+    --text-color: white;
+    --btn-color: #3500D3;
+    --header-color: #190061;
+    --cardGal-color: #0C0032;
+}
+
+body{
+    background-color: var(--background-color);
+}
+
 ul{
     float: right;
     display:flex;
     flex-direction: column;
+    color: var(--text-color);
 }
 
 li{
     list-style-type: none;
+    color: var(--text-color);
 }
 
 hr{
     width: 100%;
+    color: var(--text-color);
 }
 
 .pure-menu-list{
+    color: var(--text-color);
     margin: 21px;
 }
 
@@ -20,6 +36,15 @@ hr{
     overflow-x: scroll;
     height: 500px; 
     width: 700px;
+    background-color: var(--cardGal-color);
+}
+
+h2{
+    color: var(--text-color);
+}
+
+h3{
+    color: var(--text-color);
 }
 
 #cardCol a{
@@ -28,7 +53,17 @@ hr{
 }
 
 header{
-    border: solid 4px black;
+    color: var(--text-color);
+    border: solid 4px var(--text-color);
+    background-color: var(--header-color);
+    padding: 4px;
+}
+
+#teamHeader{
+    color: var(--text-color);
+    background-color: var(--header-color);
+    border: solid 4px var(--text-color);
+    padding: 4px;
 }
 
 #leftCol{
@@ -36,8 +71,28 @@ header{
     height: 100%;
 }
 
-img{
-    padding: 8px;
+#card{
+    border: solid 4px yellow;
+    padding: -2px;
+}
+
+#card:hover{
+    border: solid 8px var(--text-color);
+    transition: all 0.3s ease-in-out;
+}
+
+button{
+    background-color: var(--btn-color);
+    color: var(--text-color);
+}
+
+button:hover{
+    transform: translateY(-4px);
+    transition: all 0.3s ease-in-out;
+}
+
+button:active{
+    background-color: #3500d321;
 }
 
 #profPic{
