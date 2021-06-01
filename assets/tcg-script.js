@@ -13,14 +13,16 @@ var memListEl = document.querySelector('.mem');
 var remTmEl = document.querySelector('.removeTeam');
 var pokemonName;
 var pictureIndex;
+var pictureUrl;
 var arrObj;
 var btnInd = 0;
+var element;
 var cardMem = JSON.parse(localStorage.getItem('cardMem')) || [];
 
 
 function apiSearch(pokemon) {
     pokemonName = pokemon;
-    requestUrl = 'https://api.pokemontcg.io/v2/cards?q=name:' + pokemon;
+    requestUrl = 'https://api.pokemontcg.io/v2/cards?q=name:' + pokemon + '&pageSize=20';
     fetch(requestUrl)
         .then(function (response) {
             return response.json();
@@ -30,11 +32,11 @@ function apiSearch(pokemon) {
         })
 }
 
+
 var renderProfPic = function (card) {
-    var i = 0;
     var ind = 0;
     galleryCol.innerHTML = " ";
-    while (i < 40) {
+    for (var i = 0; i < 20; i++) {
         var divEl = document.createElement('div');
         var imgEl = document.createElement('img');
         imgEl.setAttribute('src', card.data[i].images.small);
@@ -44,8 +46,6 @@ var renderProfPic = function (card) {
         galleryCol.appendChild(divEl);
         divEl.appendChild(imgEl);
         titleEl.textContent = pokemonName;
-        console.log();
-        i++;
         ind++;
     }
 }
@@ -134,27 +134,22 @@ function renderRevHolofoil(card) {
     }
 }
 
+//renders team from memory
 function renderHistory() {
+    clearHistory(memListEl);
+    btnInd = 0;
+
     var btnListEl = document.querySelector('.mem');
     for (card of cardMem) {
-        var butt = document.createElement('button');
+        var butt = document.createElement('img');
+        butt.setAttribute('src', cardMem[btnInd].url)
         butt.setAttribute('class', 'memButton');
         butt.setAttribute('index', btnInd);
-        butt.textContent = card.Name;
+        butt.setAttribute('data-name', card.Name)
         btnListEl.appendChild(butt);
         btnInd++;
     }
 }
-
-function renderMemBtns() {
-    var liEl = document.createElement('li');
-    var button = document.createElement('button');
-    button.textContent = pokemonName;
-    memListEl.appendChild(liEl);
-    liEl.appendChild(button);
-}
-
-renderHistory();
 
 formEl.addEventListener('submit', function (event) {
     event.preventDefault();
@@ -166,18 +161,28 @@ formEl.addEventListener('submit', function (event) {
     apiSearch(searchQuery);
 });
 
+
+var clearHistory = function (parent) {
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
+};
+
 document.querySelector('.mem').addEventListener('click', function (event) {
     event.preventDefault();
-    var targetName = event.target.innerHTML;
+    element = event.target;
+    var targetName = element.dataset.name;
     apiSearch(targetName);
 })
 
+//selects card from gallery search
 galleryCol.addEventListener('click', function (event) {
     event.preventDefault();
     infoColEl.innerHTML = " ";
-    var element = event.target;
+    element = event.target;
     if (element.matches('img')) {
-        profPicEl.setAttribute('src', element.src);
+        pictureUrl = element.src;
+        profPicEl.setAttribute('src', pictureUrl);
         profPicEl.setAttribute('width', '300');
         profPicEl.setAttribute('height', '400');
         pictureIndex = element.getAttribute('index');
@@ -199,22 +204,34 @@ galleryCol.addEventListener('click', function (event) {
     }
 })
 
+//add to team button
 addTmEl.addEventListener('click', function (event) {
     event.preventDefault();
-    cardMem = cardMem.concat({ Name: pokemonName, URL: requestUrl });
-    localStorage.setItem('cardMem', JSON.stringify(cardMem));
-    renderMemBtns();
+    var duplicate = false;
+    //changed URL to picture index instead of full fetch URL
+    for (var i = 0; i < cardMem.length; i++) {
+        if (pokemonName === cardMem[i].Name)
+            duplicate = true;
+    }
+    if (!duplicate) {
+        cardMem = cardMem.concat({ Name: pokemonName, url: pictureUrl });
+        localStorage.setItem('cardMem', JSON.stringify(cardMem));
+        renderHistory();
+    }
 });
 
+//remove from team button
 remTmEl.addEventListener('click', function (event) {
     event.preventDefault();
-    var buttons = document.getElementsByClassName('memButton');
-    for (var i = 0; i < btnInd + 1; i++) {
-        if (buttons[i].innerHTML === pokemonName) {
-            buttons[i].setAttribute('style', 'display:none;');
+
+    //checks cardMem for correct index of card to be removed and saves
+    for (var i = 0; i < cardMem.length; i++) {
+        if (pokemonName === cardMem[i].Name) {
             cardMem.splice(i, 1);
-            localStorage.setItem('cardMem', JSON.stringify(cardMem));
+            localStorage.setItem("cardMem", JSON.stringify(cardMem));
         }
     }
-    renderMemBtns();
+    renderHistory();
 })
+
+renderHistory();
