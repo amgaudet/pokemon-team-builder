@@ -28,8 +28,22 @@ THEN cards saved in local storage show up in the my team section
 ```
 
 ## Screenshots
-<img src="./assets/WDS.png"/>
+<img src="./imgs/home-page.png"/>
+<img src="./imgs/PTB.png"/>
+<img src="./imgs/PTVG.png"/>
 
 ## Links
 [GitHub Repo Link](https://github.com/ryanpaynt/day-planner)
-[Website Link](https://ryanpaynt.github.io/day-planner/)
+[Website Link](https://amgaudet.github.io/pokemon-team-builder)
+
+## Authors
+<p>Ryan Paynter and Alan Gaudet</p>
+
+## Contact
+Alan Gaudet - <alanmgaudet@gmail.com>
+Portfolio - <https://github.com/amgaudet>
+Ryan Paynter - <ryanpaynt@outlook.com>
+Portfolio - <https://github.com/ryanpaynt>
+
+## License
+Copyright <2021> <COPYRIGHT Alan Gaudet and Ryan Paynter>
