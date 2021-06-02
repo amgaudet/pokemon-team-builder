@@ -23,7 +23,11 @@ var cardMem = JSON.parse(localStorage.getItem('cardMem')) || [];
 function apiSearch(pokemon) {
     pokemonName = pokemon;
     requestUrl = 'https://api.pokemontcg.io/v2/cards?q=name:' + pokemon + '&pageSize=20';
-    fetch(requestUrl)
+    fetch(requestUrl, {
+        headers: {
+        'X-API-KEY': '2de89bea-fc49-4f8c-bb07-8c24fc5b83ff'
+        }
+    })
         .then(function (response) {
             return response.json();
         })

@@ -91,6 +91,14 @@ button:hover{
     transition: all 0.3s ease-in-out;
 }
 
+.memButton:hover {
+    border: solid 8px var(--text-color);
+    transform: translateY(-4px);
+    transition: all 0.3s ease-in-out;
+}
+
+
+
 button:active{
     background-color: #3500d321;
 }
