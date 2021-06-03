@@ -23,7 +23,7 @@ li{
 }
 
 .pure-g{
-    border: solid 2px var(--text-color);
+    /* border: solid 2px var(--text-color); */
     color: var(--text-color);
 }
 
@@ -34,6 +34,10 @@ li{
 
 h1,h2,h3{
     margin-left: 16px;
+}
+
+.pure-input{
+    height: 30px;
 }
 
 .search-results{
@@ -48,22 +52,38 @@ h1,h2,h3{
     background-color: var(--header-color);
 }
 
-.rmvBtn{
+#rmvBtn{
     transform: translateY(-40px);
+    width: auto;
+    height: auto;
+    font-size: 10px;
+    text-align: left;
+    background-color: red;
+}
+
+#rmvBtn:hover{
+    width: 50px;
+    transition: all 1s ease-in-out;
+}
+
+#rmvBtn:active{
+    background-color: #ff000021;
 }
 
 .main-img{
     margin: auto;
 }
 
-.save-btn{
+#save-btn{
     margin-top: 10%;
-    width: 25%;
-    transform: translateX(150%);
+    width: 150px;
+    margin-left:auto;
+    margin-right:auto;
 }
 
 #picCol{
     background-color: var(--cardGal-color);
+    width: 600px;
 }
 
 header{
@@ -74,11 +94,24 @@ button{
     color: var(--text-color);
 }
 
-button:hover{
-    size: 10px;
+#save-btn:hover{
+    transform: translateY(10px);
     transition: all 0.3s ease-in-out;
 }
 
-button:active{
+#save-btn:active{
+    background-color: #3500d321;
+}
+
+#search-Btn{
+    height: 31px;
+}
+
+#search-Btn:hover{
+    transform: translateX(10px);
+    transition: all 0.3s ease-in-out;
+}
+
+#search-Btn:active{
     background-color: #3500d321;
 }
