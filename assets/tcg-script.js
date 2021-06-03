@@ -178,9 +178,39 @@ var clearHistory = function (parent) {
 document.querySelector('.mem').addEventListener('click', function (event) {
     event.preventDefault();
     element = event.target;
-    var targetName = element.dataset.name;
-    console.log(targetName);
-    apiSearch(targetName);
+    var pokemon = element.dataset.name;
+    requestUrl = 'https://api.pokemontcg.io/v2/cards?q=name:' + pokemon;
+    infoColEl.innerHTML = " ";
+    element = event.target;
+    if (element.matches('img')) {
+        pictureUrl = element.src;
+        profPicEl.setAttribute('src', pictureUrl);
+        profPicEl.setAttribute('width', '300');
+        profPicEl.setAttribute('height', '400');
+        pictureIndex = element.getAttribute('index');
+        fetch(requestUrl, {
+            headers: {
+            'X-API-KEY': '2de89bea-fc49-4f8c-bb07-8c24fc5b83ff'
+            }
+        })
+            .then(function (response) {
+                if(!response.ok){
+                    window.location = './429Error.html';
+                }
+                return response.json();
+            })
+            .then(function (card) {
+                if (card.data[pictureIndex].tcgplayer.prices.hasOwnProperty('holofoil')) {
+                    renderHolo(card);
+                }
+                if (card.data[pictureIndex].tcgplayer.prices.hasOwnProperty('reverseHolofoil')) {
+                    renderRevHolofoil(card);
+                }
+                if (card.data[pictureIndex].tcgplayer.prices.hasOwnProperty('normal')) {
+                    renderNormalCard(card);
+                }
+            })
+    }
 })
 
 //selects card from gallery search
