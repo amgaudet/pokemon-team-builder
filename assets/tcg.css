@@ -33,10 +33,11 @@ hr{
 }
 
 #cardCol{
-    overflow-x: scroll;
+    overflow-y: scroll;
     height: 500px; 
-    width: 700px;
+    width: 300px;
     background-color: var(--cardGal-color);
+    
 }
 
 h2{
@@ -49,12 +50,24 @@ h3{
 
 #cardCol a{
     display: inline-block;
-    margin-left: 25%;
+    margin: 25%;
+}
+
+input{
+    height: 28px;
+}
+
+#profCol{
+    margin-left: 10%;
+}
+
+#infoCol{
+    margin-Left: 25%;
+    width: 150px;
 }
 
 header{
     color: var(--text-color);
-    border: solid 4px var(--text-color);
     background-color: var(--header-color);
     padding: 4px;
 }
@@ -62,7 +75,6 @@ header{
 #teamHeader{
     color: var(--text-color);
     background-color: var(--header-color);
-    border: solid 4px var(--text-color);
     padding: 4px;
 }
 
@@ -81,13 +93,13 @@ header{
     transition: all 0.3s ease-in-out;
 }
 
-button{
+.pure-button{
     background-color: var(--btn-color);
     color: var(--text-color);
 }
 
 button:hover{
-    transform: translateY(-4px);
+    transform: translateX(10px);
     transition: all 0.3s ease-in-out;
 }
 

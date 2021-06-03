@@ -1,0 +1,26 @@
+:root{
+        --background-color: #282828;
+        --text-color: white;
+        --btn-color: #3500D3;
+        --header-color: #190061;
+        --cardGal-color: #0C0032;
+}
+
+body{
+    background-color: var(--background-color);
+    color: var(--text-color);
+    overflow: hidden;
+}
+
+header{
+    display: block;
+}
+
+h1, h2, h3, h4{
+    text-align: center;
+}
+
+#img{
+    display: flex;
+    justify-content: center;
+}
