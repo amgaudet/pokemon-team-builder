@@ -13,7 +13,7 @@ body{
 ul{
     float: right;
     display:flex;
-    flex-direction: column;
+    flex-direction: row;
     color: var(--text-color);
 }
 
@@ -101,6 +101,10 @@ header{
 button:hover{
     transform: translateX(10px);
     transition: all 0.3s ease-in-out;
+}
+
+.memButton {
+    padding: 20px;
 }
 
 .memButton:hover {
