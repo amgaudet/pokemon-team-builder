@@ -148,12 +148,23 @@ function renderHistory() {
 
     var btnListEl = document.querySelector('.mem');
     for (card of cardMem) {
+        var container = document.createElement('div');
+        container.setAttribute('class', 'team-container');
+
+        var remove = document.createElement('button');
+        remove.setAttribute('class', 'pure-button button-remove removeTeam');
+        remove.setAttribute('data-name', card.Name);
+        remove.textContent = 'X';
+
         var butt = document.createElement('img');
         butt.setAttribute('src', cardMem[btnInd].url)
         butt.setAttribute('class', 'memButton');
         butt.setAttribute('index', btnInd);
         butt.setAttribute('data-name', card.Name)
-        btnListEl.appendChild(butt);
+
+        btnListEl.appendChild(container);
+        container.appendChild(butt);
+        container.appendChild(remove);
         btnInd++;
     }
 }
@@ -178,8 +189,18 @@ var clearHistory = function (parent) {
 document.querySelector('.mem').addEventListener('click', function (event) {
     event.preventDefault();
     element = event.target;
-    var pokemon = element.dataset.name;
-    requestUrl = 'https://api.pokemontcg.io/v2/cards?q=name:' + pokemon;
+    if (element.matches('button')){
+        var selector = element.dataset.name;
+        for (var i = 0; i < cardMem.length; i++) {
+            if (selector === cardMem[i].Name) {
+                cardMem.splice(i, 1);
+                localStorage.setItem("cardMem", JSON.stringify(cardMem));
+            }
+        }
+        renderHistory();
+    }
+    pokemonName = element.dataset.name;
+    requestUrl = 'https://api.pokemontcg.io/v2/cards?q=name:' + pokemonName;
     infoColEl.innerHTML = " ";
     element = event.target;
     if (element.matches('img')) {
@@ -270,5 +291,7 @@ remTmEl.addEventListener('click', function (event) {
     }
     renderHistory();
 })
+
+
 
 renderHistory();
