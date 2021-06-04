@@ -33,7 +33,7 @@ THEN cards saved in local storage show up in the my team section
 <img src="./imgs/PTVG.png"/>
 
 ## Links
-[GitHub Repo Link](https://github.com/ryanpaynt/day-planner)
+[GitHub Repo Link](https://github.com/amgaudet/pokemon-team-builder)
 [Website Link](https://amgaudet.github.io/pokemon-team-builder)
 
 ## Authors
