@@ -13,7 +13,7 @@ body{
 ul{
     float: right;
     display:flex;
-    flex-direction: column;
+    flex-direction: row;
     color: var(--text-color);
 }
 
@@ -93,6 +93,12 @@ header{
     transition: all 0.3s ease-in-out;
 }
 
+.team-container {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
 .pure-button{
     background-color: var(--btn-color);
     color: var(--text-color);
@@ -101,6 +107,14 @@ header{
 button:hover{
     transform: translateX(10px);
     transition: all 0.3s ease-in-out;
+}
+
+.button-remove {
+    background: rgb(202, 60, 60);
+    position: relative;
+    bottom: 80%;
+    max-width: 20px;
+    left: 75%;
 }
 
 .memButton:hover {
