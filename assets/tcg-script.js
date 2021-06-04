@@ -21,7 +21,6 @@ function apiSearch(pokemon) {
     pokemonName = pokemon;
     requestUrl = 'https://api.pokemontcg.io/v2/cards?q=name:' + pokemon;
     fetch(requestUrl, {
-
         headers: {
             'X-API-KEY': '2de89bea-fc49-4f8c-bb07-8c24fc5b83ff'
         }
@@ -32,13 +31,14 @@ function apiSearch(pokemon) {
             }
             return response.json();
         })
-        .then(function (data) {
-            renderProfPic(data);
+        .then(function (card) {
+            renderProfPic(card);
         })
 }
 
 // renders the gallery of cards by setting attributes true to pure css and appending them
 var renderProfPic = function (card) {
+    console.log(card);
     var ind = 0;
     galleryCol.innerHTML = " ";
     // loops to create multiple cards with multiple indexes
@@ -46,9 +46,11 @@ var renderProfPic = function (card) {
         var divEl = document.createElement('div');
         var imgEl = document.createElement('img');
         imgEl.setAttribute('src', card.data[i].images.small);
+        imgEl.setAttribute('data-id', card.data[i].id); 
+        imgEl.setAttribute('data-name', card.data[i].name);
         divEl.setAttribute('class', 'pure-u-2-4');
         imgEl.setAttribute('index', ind);
-        imgEl.setAttribute('id', 'card');
+        imgEl.setAttribute('id', 'card' + i);
         galleryCol.appendChild(divEl);
         divEl.appendChild(imgEl);
         titleEl.textContent = pokemonName;
@@ -61,7 +63,6 @@ function renderHolo(card) {
     // setting attributes
     addTeamEl.setAttribute('style', 'visibility:visible;');
     addTeamEl.setAttribute('class', 'pure-button');
-    remTmEl.setAttribute('class', 'pure-button');
     // pulling the prices from the API database
     var holofoil = card.data[pictureIndex].tcgplayer.prices.holofoil;
     // an array of the subtypes of holofoil priceses
@@ -93,7 +94,6 @@ function renderHolo(card) {
 function renderNormalCard(card) {
     // setting attributes
     addTeamEl.setAttribute('style', 'visibility:visible;');
-    remTmEl.setAttribute('style', 'visibility:visible;');
     // pulling the prices from the API database
     var normal = card.data[pictureIndex].tcgplayer.prices.normal;
     // an array of the subtypes of normal priceses
@@ -126,7 +126,6 @@ function renderNormalCard(card) {
 function renderRevHolofoil(card) {
     // setting attributes
     addTeamEl.setAttribute('style', 'visibility:visible;');
-    remTmEl.setAttribute('style', 'visibility:visible;');
     // pulling the prices from the API database
     var revHolo = card.data[pictureIndex].tcgplayer.prices.reverseHolofoil;
     // an array of the subtypes of reverse holo priceses
@@ -213,10 +212,10 @@ document.querySelector('.mem').addEventListener('click', function (event) {
     event.preventDefault();
     element = event.target;
     if (element.matches('button')) {
-        var selector = element.dataset.name;
+        var selector = element.dataset.id;
         // looping through localstorage to find the card and then remove it
         for (var i = 0; i < cardMem.length; i++) {
-            if (selector === cardMem[i].Name) {
+            if (selector === cardMem[i].id) {
                 cardMem.splice(i, 1);
                 localStorage.setItem("cardMem", JSON.stringify(cardMem));
             }
@@ -234,6 +233,8 @@ document.querySelector('.mem').addEventListener('click', function (event) {
     //then the profile picture can obtain its attributes 
     if (element.matches('img')) {
         pictureUrl = element.src;
+        profPicEl.setAttribute('data-id', element.dataset.id);
+        profPicEl.setAttribute('data-name', element.dataset.name);
         profPicEl.setAttribute('src', pictureUrl);
         profPicEl.setAttribute('width', '300');
         profPicEl.setAttribute('height', '400');
@@ -314,7 +315,9 @@ galleryCol.addEventListener('click', function (event) {
 //add to team button
 addTmEl.addEventListener('click', function (event) {
     event.preventDefault();
-    cardMem = cardMem.concat({ Name: pokemonName, url: pictureUrl });
+    var image = document.querySelector('#profPic');
+    console.log(image.dataset);
+    cardMem = cardMem.concat({ name: image.dataset.name, url: image.src, id: image.dataset.id });
     localStorage.setItem('cardMem', JSON.stringify(cardMem));
     renderHistory();
 });
@@ -322,10 +325,11 @@ addTmEl.addEventListener('click', function (event) {
 //remove from team button
 remTmEl.addEventListener('click', function (event) {
     event.preventDefault();
+    var image = document.querySelector('#profPic');
 
     //checks cardMem for correct index of card to be removed and saves
     for (var i = 0; i < cardMem.length; i++) {
-        if (pokemonName === cardMem[i].Name) {
+        if (image.dataset.id === cardMem[i].id) {
             cardMem.splice(i, 1);
             localStorage.setItem("cardMem", JSON.stringify(cardMem));
         }
