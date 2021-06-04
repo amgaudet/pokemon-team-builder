@@ -7,6 +7,10 @@
     --cardGal-color: #0C0032;
 }
 
+header{
+    width: 100%;
+}
+
 /* body background color */
 body{
     background-color: var(--background-color);
@@ -19,6 +23,7 @@ ul{
     flex-direction: row;
     flex-wrap: wrap;
     color: var(--text-color);
+    padding: 0;
 }
 
 /* eliminates bullet points from each individual list item */
@@ -41,10 +46,13 @@ hr{
 
 /* card column has scrollable features, a set size with a background color*/
 #cardCol{
+    width: 35%;
     overflow-y: scroll;
+    overflow-x: hidden;
     height: 500px; 
-    width: 300px;
+    /* width: 700px; */
     background-color: var(--cardGal-color);
+    margin-right: 20px;
     
 }
 
@@ -55,8 +63,9 @@ h2, h3{
 
 /* reference tags in the card column are formatted and have a margin */
 #cardCol a{
-    display: inline-block;
+    display:contents;
     margin: 25%;
+    width: min-content;
 }
 
 /* increases height on the seach bar */
@@ -66,13 +75,13 @@ input{
 
 /* the profile column has a margin */
 #profCol{
-    margin-left: 10%;
+    width: 400px;
+    margin-left: 40px;
 }
-
 /* info in that column is formatted and sized */
 #infoCol{
-    margin-Left: 25%;
-    width: 150px;
+    width: 100px;
+    margin-left: 50px;
 }
 
 /* header tag has padding, text color, and background color */
@@ -94,16 +103,11 @@ header{
     overflow: scroll;
     height: 100%;
 }
-
 /* each card in the gallery has padding and a border */
-#card{
-    border: solid 4px yellow;
-    padding: -2px;
-}
 
 /* when hovering over these cards they have a big, white, and animated border*/
-#card:hover{
-    border: solid 8px var(--text-color);
+#indivImg:hover{
+    transform: translateY(-1px);
     transition: all 0.3s ease-in-out;
 }
 
@@ -112,6 +116,11 @@ header{
     display: flex;
     flex-direction: column;
     padding: 20px;
+}
+
+#indivImg{
+    margin: 0;
+    width: 30%;
 }
 
 /* each button has color */

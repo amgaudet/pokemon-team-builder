@@ -48,7 +48,8 @@ var renderProfPic = function (card) {
         imgEl.setAttribute('src', card.data[i].images.small);
         imgEl.setAttribute('data-id', card.data[i].id); 
         imgEl.setAttribute('data-name', card.data[i].name);
-        divEl.setAttribute('class', 'pure-u-2-4');
+        divEl.setAttribute('class', 'pure-u-3-4');
+        divEl.setAttribute('id', 'indivImg');
         imgEl.setAttribute('index', ind);
         imgEl.setAttribute('id', 'card' + i);
         galleryCol.appendChild(divEl);
@@ -77,7 +78,7 @@ function renderHolo(card) {
     var hrEl = document.createElement('hr');
     firstEdEl.textContent = 'Holofoil';
     rowEl.setAttribute('class', 'pure-g');
-    colEl.setAttribute('class', 'pure-u');
+    colEl.setAttribute('class', 'pure-u-1');
     infoColEl.appendChild(rowEl);
     rowEl.appendChild(colEl);
     colEl.appendChild(firstEdEl);
@@ -108,7 +109,7 @@ function renderNormalCard(card) {
     var hrEl = document.createElement('hr');
     firstEdEl.textContent = 'Normal';
     rowEl.setAttribute('class', 'pure-g');
-    colEl.setAttribute('class', 'pure-u');
+    colEl.setAttribute('class', 'pure-u-1');
     infoColEl.appendChild(rowEl);
     rowEl.appendChild(colEl);
     colEl.appendChild(firstEdEl);
@@ -140,7 +141,7 @@ function renderRevHolofoil(card) {
     var hrEl = document.createElement('hr');
     firstEdEl.textContent = 'Reverse Holofoil';
     rowEl.setAttribute('class', 'pure-g');
-    colEl.setAttribute('class', 'pure-u');
+    colEl.setAttribute('class', 'pure-u-1');
     infoColEl.appendChild(rowEl);
     rowEl.appendChild(colEl);
     colEl.appendChild(firstEdEl);
