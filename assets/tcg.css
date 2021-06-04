@@ -14,6 +14,7 @@ ul{
     float: right;
     display:flex;
     flex-direction: row;
+    flex-wrap: wrap;
     color: var(--text-color);
 }
 
