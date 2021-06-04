@@ -1,7 +1,9 @@
+/* universal selector */
 * {
     box-sizing: border-box;
 }
 
+/* root selector declaring universal colors to be used throughout the css */
 :root{
     --background-color: #282828;
     --text-color: white;
@@ -10,22 +12,26 @@
     --cardGal-color: #0C0032;
 }
 
+/* body background color */
 body{
     background-color: var(--background-color);
 }
 
+/* banner image formatting */
 #image{
     max-width: 100%;
     height: auto;
     width: auto\9;
 }
 
+/* formatting the header with flex and coloring it */
 header {
     display: flex;
     justify-content: center;
     color: var(--text-color);
 }
 
+/* rows in the html get borders along with colors and formatting */
 .pure-g{
     border-top: solid 2px var(--text-color);
     border-bottom: solid 2px var(--text-color);
@@ -36,26 +42,31 @@ header {
     text-align: center;
 }
 
+/* each column is aligned and colored */
 .pure-u-1-3{
     align-self: center;
     color: var(--text-color);
 }
 
+/* each section is fitting the page and inhabits white text color */
 section {
 overflow: hidden;
 color: var(--text-color);
 }
 
+/* each reference tag has background color and text color */
 a{
     background-color: var(--btn-color);
     color: var(--text-color);
 }
 
+/* on hover the reference tag moves up */
 a:hover{
     transform: translateY(-4px);
     transition: all 0.3s ease-in-out;
 }
 
+/* once clicked the a tag fades */
 a:active{
     background-color: #3500d321;
 }

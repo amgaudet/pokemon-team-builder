@@ -172,6 +172,7 @@ searchEl.addEventListener("click", function (event) {
     }
 });
 
+// this event listener waits for the user to clikc on an image in the history to search the api
 savedLibrary.addEventListener("click", function (event) {
     event.preventDefault();
     var element = event.target;
