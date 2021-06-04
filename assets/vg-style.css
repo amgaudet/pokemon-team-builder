@@ -1,7 +1,9 @@
+/* universal selector */
 * {
     box-sizing: border-box;
 }
 
+/* root selector declaring universal colors to be used throughout the css */
 :root{
     --background-color: #282828;
     --text-color: white;
@@ -10,48 +12,58 @@
     --cardGal-color: #0C0032;
 }
 
+/* increases margin on the seach bar */
+
 input{
     margin-left: 16px;
 }
 
+/* body background color */
 body{
     background-color: var(--background-color);
 }
 
+/* eliminates bullet points from each individual list item */
 li{
     list-style-type: none;
 }
 
+/* each row has white text color */
 .pure-g{
-    /* border: solid 2px var(--text-color); */
     color: var(--text-color);
 }
 
+/* menu lists have positioning and a margin */
 .pure-menu-list{
     margin: 21px;
     float: right;
 }
 
+/* headers have margin */
 h1,h2,h3{
     margin-left: 16px;
 }
 
+/* search bar has height */
 .pure-input{
     height: 30px;
 }
 
+/* this container nhabits flex properties, spacing, and direction */
 .search-results{
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
+/* this container nhabits flex properties, spacing, and direction */
 #myTeamRow{
     display: flex;
     flex-direction: column;
     background-color: var(--header-color);
 }
 
+/* remove button is positioned and colored */
 #rmvBtn{
     transform: translateY(-40px);
     width: auto;
@@ -61,19 +73,24 @@ h1,h2,h3{
     background-color: red;
 }
 
+/* when hovered over the remove button is animated */
 #rmvBtn:hover{
     width: 50px;
     transition: all 1s ease-in-out;
 }
 
+/* when clicked the remove button is transparent */
 #rmvBtn:active{
     background-color: #ff000021;
 }
 
+/* changing the cursor of the image and setting margins */
 .main-img{
     margin: auto;
+    cursor:default;
 }
 
+/* save button has margins and width */
 #save-btn{
     margin-top: 10%;
     width: 150px;
@@ -81,37 +98,51 @@ h1,h2,h3{
     margin-right:auto;
 }
 
+/* this container has a set width and background color */
 #picCol{
     background-color: var(--cardGal-color);
     width: 600px;
 }
 
+/* header tag has a background color */
 header{
     background-color: var(--header-color);
 }
+
+/* each button has color */
 button{
     background-color: var(--btn-color);
     color: var(--text-color);
 }
 
+/* each image has a pointer cursor */
+img:hover{
+    cursor: pointer;
+}
+
+/* when hovering over this button it changes the position and animates it */
 #save-btn:hover{
     transform: translateY(10px);
     transition: all 0.3s ease-in-out;
 }
 
+/* once clicked it turns transparent */
 #save-btn:active{
     background-color: #3500d321;
 }
 
+/* the search buttons height is increased */
 #search-Btn{
     height: 31px;
 }
 
+/* when hovering over this button it changes the position and animates it */
 #search-Btn:hover{
     transform: translateX(10px);
     transition: all 0.3s ease-in-out;
 }
 
+/* once clicked it turns transparent */
 #search-Btn:active{
     background-color: #3500d321;
 }

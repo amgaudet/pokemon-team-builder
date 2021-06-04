@@ -21,13 +21,13 @@ function apiSearch(pokemon) {
     pokemonName = pokemon;
     requestUrl = 'https://api.pokemontcg.io/v2/cards?q=name:' + pokemon;
     fetch(requestUrl, {
-        
+
         headers: {
-        'X-API-KEY': '2de89bea-fc49-4f8c-bb07-8c24fc5b83ff'
+            'X-API-KEY': '2de89bea-fc49-4f8c-bb07-8c24fc5b83ff'
         }
     })
         .then(function (response) {
-            if(!response.ok){
+            if (!response.ok) {
                 window.location = './429Error.html';
             }
             return response.json();
@@ -37,10 +37,11 @@ function apiSearch(pokemon) {
         })
 }
 
-
+// renders the gallery of cards by setting attributes true to pure css and appending them
 var renderProfPic = function (card) {
     var ind = 0;
     galleryCol.innerHTML = " ";
+    // loops to create multiple cards with multiple indexes
     for (var i = 0; i < 20; i++) {
         var divEl = document.createElement('div');
         var imgEl = document.createElement('img');
@@ -55,16 +56,20 @@ var renderProfPic = function (card) {
     }
 }
 
+// this function displays the holo cost for a card
 function renderHolo(card) {
+    // setting attributes
     addTeamEl.setAttribute('style', 'visibility:visible;');
     addTeamEl.setAttribute('class', 'pure-button');
-    remTmEl.setAttribute('style', 'visibility:visible;');
     remTmEl.setAttribute('class', 'pure-button');
+    // pulling the prices from the API database
     var holofoil = card.data[pictureIndex].tcgplayer.prices.holofoil;
+    // an array of the subtypes of holofoil priceses
     var arrPrices = [
         'Low: $' + holofoil.low, 'Mid: $' + holofoil.mid,
         'High: $' + holofoil.high, 'Market: $' + holofoil.market
     ];
+    // creating and appending elements
     var rowEl = document.createElement('div');
     var colEl = document.createElement('div');
     var firstEdEl = document.createElement('h3');
@@ -84,15 +89,19 @@ function renderHolo(card) {
         ulEl.appendChild(liEl);
     }
 }
-
+// this function displays the normal cost for a card
 function renderNormalCard(card) {
+    // setting attributes
     addTeamEl.setAttribute('style', 'visibility:visible;');
     remTmEl.setAttribute('style', 'visibility:visible;');
+    // pulling the prices from the API database
     var normal = card.data[pictureIndex].tcgplayer.prices.normal;
+    // an array of the subtypes of normal priceses
     var arrPrices = [
         'Low: $' + normal.low, 'Mid: $' + normal.mid,
         'High: $' + normal.high, 'Market: $' + normal.market
     ];
+    // creating and appending elements
     var rowEl = document.createElement('div');
     var colEl = document.createElement('div');
     var firstEdEl = document.createElement('h3');
@@ -113,14 +122,19 @@ function renderNormalCard(card) {
     }
 }
 
+// this function displays the reverse holo cost for a card
 function renderRevHolofoil(card) {
+    // setting attributes
     addTeamEl.setAttribute('style', 'visibility:visible;');
     remTmEl.setAttribute('style', 'visibility:visible;');
+    // pulling the prices from the API database
     var revHolo = card.data[pictureIndex].tcgplayer.prices.reverseHolofoil;
+    // an array of the subtypes of reverse holo priceses
     var arrPrices = [
         'Low: $' + revHolo.low, 'Mid: $' + revHolo.mid,
         'High: $' + revHolo.high, 'Market: $' + revHolo.market
     ];
+    // creating and appending elements
     var rowEl = document.createElement('div');
     var colEl = document.createElement('div');
     var firstEdEl = document.createElement('h3');
@@ -143,11 +157,15 @@ function renderRevHolofoil(card) {
 
 //renders team from memory
 function renderHistory() {
+    //clears the history first to remove redundancies
     clearHistory(memListEl);
     btnInd = 0;
 
+    // slects the memory container
     var btnListEl = document.querySelector('.mem');
+    // loops through local storage to populate the memory page
     for (card of cardMem) {
+        // setting attributes and appending 
         var container = document.createElement('div');
         container.setAttribute('class', 'team-container');
 
@@ -169,57 +187,73 @@ function renderHistory() {
     }
 }
 
+//adds an event listener on the search button to enable the user to search for a pokemon
 formEl.addEventListener('submit', function (event) {
     event.preventDefault();
     var searchQuery;
     searchQuery = input.value.toLowerCase();
+    //if the search bar is empty the user is prompted
     if (searchQuery === "") {
         alert('Please enter a valid pokemon name!');
     }
+    // calls the apiSearch function with the search contents as the parameter
     apiSearch(searchQuery);
 });
 
-
+// clears history to remove redundancies
 var clearHistory = function (parent) {
     while (parent.firstChild) {
         parent.removeChild(parent.firstChild);
     }
 };
 
+// removes a card from memory by splicing it out of the array in localStorage
+// or it can add a card by doing another fetch to populate the profile picture column
 document.querySelector('.mem').addEventListener('click', function (event) {
     event.preventDefault();
     element = event.target;
-    if (element.matches('button')){
+    if (element.matches('button')) {
         var selector = element.dataset.name;
+        // looping through localstorage to find the card and then remove it
         for (var i = 0; i < cardMem.length; i++) {
             if (selector === cardMem[i].Name) {
                 cardMem.splice(i, 1);
                 localStorage.setItem("cardMem", JSON.stringify(cardMem));
             }
         }
+        // calls renderHistory function
         renderHistory();
     }
+    //uses the pokemon name assigned the card and fetches from the api
     pokemonName = element.dataset.name;
     requestUrl = 'https://api.pokemontcg.io/v2/cards?q=name:' + pokemonName;
+    // empties the information column html
     infoColEl.innerHTML = " ";
     element = event.target;
+    // conditional to make sure the element being clicked is an image
+    //then the profile picture can obtain its attributes 
     if (element.matches('img')) {
         pictureUrl = element.src;
         profPicEl.setAttribute('src', pictureUrl);
         profPicEl.setAttribute('width', '300');
         profPicEl.setAttribute('height', '400');
         pictureIndex = element.getAttribute('index');
+        //fetching from api
         fetch(requestUrl, {
+            //attatching the api key to reduce the amount of 429 errors
             headers: {
-            'X-API-KEY': '2de89bea-fc49-4f8c-bb07-8c24fc5b83ff'
+                'X-API-KEY': '2de89bea-fc49-4f8c-bb07-8c24fc5b83ff'
             }
         })
+            //returns the json response of the api to make it obtainable
             .then(function (response) {
-                if(!response.ok){
+                // if it runs into an error an error page pops up
+                if (!response.ok) {
                     window.location = './429Error.html';
                 }
                 return response.json();
             })
+            // checking what prices come with the specfic card in order to call the right functions
             .then(function (card) {
                 if (card.data[pictureIndex].tcgplayer.prices.hasOwnProperty('holofoil')) {
                     renderHolo(card);
@@ -239,23 +273,30 @@ galleryCol.addEventListener('click', function (event) {
     event.preventDefault();
     infoColEl.innerHTML = " ";
     element = event.target;
+    // conditional to make sure the element being clicked is an image
+    //then the profile picture can obtain its attributes 
     if (element.matches('img')) {
         pictureUrl = element.src;
         profPicEl.setAttribute('src', pictureUrl);
         profPicEl.setAttribute('width', '300');
         profPicEl.setAttribute('height', '400');
         pictureIndex = element.getAttribute('index');
+        //fetching from api
         fetch(requestUrl, {
+            //attatching the api key to reduce the amount of 429 errors
             headers: {
-            'X-API-KEY': '2de89bea-fc49-4f8c-bb07-8c24fc5b83ff'
+                'X-API-KEY': '2de89bea-fc49-4f8c-bb07-8c24fc5b83ff'
             }
         })
+            //returns the json response of the api to make it obtainable
             .then(function (response) {
-                if(!response.ok){
+                // if it runs into an error an error page pops up
+                if (!response.ok) {
                     window.location = './429Error.html';
                 }
                 return response.json();
             })
+            // checking what prices come with the specfic card in order to call the right functions
             .then(function (card) {
                 if (card.data[pictureIndex].tcgplayer.prices.hasOwnProperty('holofoil')) {
                     renderHolo(card);
@@ -273,9 +314,9 @@ galleryCol.addEventListener('click', function (event) {
 //add to team button
 addTmEl.addEventListener('click', function (event) {
     event.preventDefault();
-        cardMem = cardMem.concat({ Name: pokemonName, url: pictureUrl });
-        localStorage.setItem('cardMem', JSON.stringify(cardMem));
-        renderHistory();
+    cardMem = cardMem.concat({ Name: pokemonName, url: pictureUrl });
+    localStorage.setItem('cardMem', JSON.stringify(cardMem));
+    renderHistory();
 });
 
 //remove from team button

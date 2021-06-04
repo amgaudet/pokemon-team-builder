@@ -1,3 +1,4 @@
+/* root selector declaring universal colors to be used throughout the css */
 :root{
     --background-color: #282828;
     --text-color: white;
@@ -6,10 +7,12 @@
     --cardGal-color: #0C0032;
 }
 
+/* body background color */
 body{
     background-color: var(--background-color);
 }
 
+/* formats unordered list to have flex properties and white text color */
 ul{
     float: right;
     display:flex;
@@ -18,21 +21,25 @@ ul{
     color: var(--text-color);
 }
 
+/* eliminates bullet points from each individual list item */
 li{
     list-style-type: none;
     color: var(--text-color);
 }
 
+/* colors the break points */
 hr{
     width: 100%;
     color: var(--text-color);
 }
 
+/* menu lists have white text color and a margin */
 .pure-menu-list{
     color: var(--text-color);
     margin: 21px;
 }
 
+/* card column has scrollable features, a set size with a background color*/
 #cardCol{
     overflow-y: scroll;
     height: 500px; 
@@ -41,95 +48,108 @@ hr{
     
 }
 
-h2{
+/* h2/h3 have white text colors */
+h2, h3{
     color: var(--text-color);
 }
 
-h3{
-    color: var(--text-color);
-}
-
+/* reference tags in the card column are formatted and have a margin */
 #cardCol a{
     display: inline-block;
     margin: 25%;
 }
 
+/* increases height on the seach bar */
 input{
     height: 28px;
 }
 
+/* the profile column has a margin */
 #profCol{
     margin-left: 10%;
 }
 
+/* info in that column is formatted and sized */
 #infoCol{
     margin-Left: 25%;
     width: 150px;
 }
 
+/* header tag has padding, text color, and background color */
 header{
     color: var(--text-color);
     background-color: var(--header-color);
     padding: 4px;
 }
 
+/* mt team header has padding, text color, and background color*/
 #teamHeader{
     color: var(--text-color);
     background-color: var(--header-color);
     padding: 4px;
 }
 
+/* the gallery column has scrollable capabilities */
 #leftCol{
     overflow: scroll;
     height: 100%;
 }
 
+/* each card in the gallery has padding and a border */
 #card{
     border: solid 4px yellow;
     padding: -2px;
 }
 
+/* when hovering over these cards they have a big, white, and animated border*/
 #card:hover{
     border: solid 8px var(--text-color);
     transition: all 0.3s ease-in-out;
 }
 
+/* my team container has flex properties with padding */
 .team-container {
     display: flex;
     flex-direction: column;
     padding: 20px;
 }
 
+/* each button has color */
 .pure-button{
     background-color: var(--btn-color);
     color: var(--text-color);
 }
 
+/* when hovering over these buttons they move and are animated*/
 button:hover{
     transform: translateX(10px);
     transition: all 0.3s ease-in-out;
 }
 
+/* remove from team buttons are colord and positioned inside the card */
 .button-remove {
     background: rgb(202, 60, 60);
     position: relative;
     bottom: 80%;
     max-width: 20px;
     left: 75%;
+    padding-right: 25px;
+
 }
 
+/* each button changes the border and position when beign hovered over*/
 .memButton:hover {
     border: solid 8px var(--text-color);
     transform: translateY(-4px);
     transition: all 0.3s ease-in-out;
 }
 
-
-
+/* when clicked the button is transparent */
 button:active{
     background-color: #3500d321;
 }
 
+/* profile pictures are floated and have margins */
 #profPic{
     float: left;
     margin: 0;
