@@ -48,7 +48,7 @@ var renderProfPic = function (card) {
         imgEl.setAttribute('src', card.data[i].images.small);
         imgEl.setAttribute('data-id', card.data[i].id); 
         imgEl.setAttribute('data-name', card.data[i].name);
-        divEl.setAttribute('class', 'pure-u-3-4');
+        divEl.setAttribute('class', 'pure-u-1-6 pure-u-sm-1-2');
         divEl.setAttribute('id', 'indivImg');
         imgEl.setAttribute('index', ind);
         imgEl.setAttribute('id', 'card' + i);
@@ -171,14 +171,14 @@ function renderHistory() {
 
         var remove = document.createElement('button');
         remove.setAttribute('class', 'pure-button button-remove removeTeam');
-        remove.setAttribute('data-name', card.Name);
+        remove.setAttribute('data-name', card.name);
         remove.textContent = 'X';
 
         var butt = document.createElement('img');
         butt.setAttribute('src', cardMem[btnInd].url)
         butt.setAttribute('class', 'memButton');
         butt.setAttribute('index', btnInd);
-        butt.setAttribute('data-name', card.Name)
+        butt.setAttribute('data-name', card.name)
 
         btnListEl.appendChild(container);
         container.appendChild(butt);
@@ -317,7 +317,7 @@ galleryCol.addEventListener('click', function (event) {
 addTmEl.addEventListener('click', function (event) {
     event.preventDefault();
     var image = document.querySelector('#profPic');
-    console.log(image.dataset);
+    console.log(image);
     cardMem = cardMem.concat({ name: image.dataset.name, url: image.src, id: image.dataset.id });
     localStorage.setItem('cardMem', JSON.stringify(cardMem));
     renderHistory();

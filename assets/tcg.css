@@ -46,7 +46,8 @@ hr{
 
 /* card column has scrollable features, a set size with a background color*/
 #cardCol{
-    width: 35%;
+    /* width: 40%; */
+    min-width: 400px;
     overflow-y: scroll;
     overflow-x: hidden;
     height: 500px; 
@@ -120,7 +121,7 @@ header{
 
 #indivImg{
     margin: 0;
-    width: 30%;
+    width: 17%;
 }
 
 /* each button has color */
