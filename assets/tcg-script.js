@@ -161,7 +161,7 @@ function renderHistory() {
     clearHistory(memListEl);
     btnInd = 0;
 
-    // slects the memory container
+    // selects the memory container
     var btnListEl = document.querySelector('.mem');
     // loops through local storage to populate the memory page
     for (card of cardMem) {
@@ -171,14 +171,18 @@ function renderHistory() {
 
         var remove = document.createElement('button');
         remove.setAttribute('class', 'pure-button button-remove removeTeam');
-        remove.setAttribute('data-name', card.name);
+
+        remove.setAttribute('data-name', card.Name);
+        remove.setAttribute('data-id', cardMem[btnInd].id);
         remove.textContent = 'X';
 
         var butt = document.createElement('img');
         butt.setAttribute('src', cardMem[btnInd].url)
         butt.setAttribute('class', 'memButton');
         butt.setAttribute('index', btnInd);
-        butt.setAttribute('data-name', card.name)
+
+        butt.setAttribute('data-name', cardMem[btnInd].name)
+        butt.setAttribute('data-id', cardMem[btnInd].id);
 
         btnListEl.appendChild(container);
         container.appendChild(butt);
@@ -214,6 +218,8 @@ document.querySelector('.mem').addEventListener('click', function (event) {
     element = event.target;
     if (element.matches('button')) {
         var selector = element.dataset.id;
+        console.log(element);
+        console.log(selector);
         // looping through localstorage to find the card and then remove it
         for (var i = 0; i < cardMem.length; i++) {
             if (selector === cardMem[i].id) {
@@ -221,7 +227,7 @@ document.querySelector('.mem').addEventListener('click', function (event) {
                 localStorage.setItem("cardMem", JSON.stringify(cardMem));
             }
         }
-        // calls renderHistory function
+        // Repopulates My Team after changes made
         renderHistory();
     }
     //uses the pokemon name assigned the card and fetches from the api
@@ -233,6 +239,7 @@ document.querySelector('.mem').addEventListener('click', function (event) {
     // conditional to make sure the element being clicked is an image
     //then the profile picture can obtain its attributes 
     if (element.matches('img')) {
+        apiSearch(pokemonName);
         pictureUrl = element.src;
         profPicEl.setAttribute('data-id', element.dataset.id);
         profPicEl.setAttribute('data-name', element.dataset.name);
@@ -282,6 +289,8 @@ galleryCol.addEventListener('click', function (event) {
         profPicEl.setAttribute('src', pictureUrl);
         profPicEl.setAttribute('width', '300');
         profPicEl.setAttribute('height', '400');
+        profPicEl.setAttribute("data-name", element.dataset.name);
+        profPicEl.setAttribute("data-id", element.dataset.id);
         pictureIndex = element.getAttribute('index');
         //fetching from api
         fetch(requestUrl, {
