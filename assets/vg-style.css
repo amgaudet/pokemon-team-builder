@@ -115,6 +115,10 @@ button{
     color: var(--text-color);
 }
 
+#pokeInfo{
+    margin-left: 30px;
+}
+
 /* each image has a pointer cursor */
 img:hover{
     cursor: pointer;
